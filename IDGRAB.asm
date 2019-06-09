@@ -41,7 +41,10 @@ ReceivePacket:      ;
  AppOffErr          ; stop handling errors
  ld hl,response     ; start looking at our response
  ld a,(hl)          ;   and load the returned machine ID
- bcall(_SetXXOP1)   ;   and put that into OP1
+ ld h,0
+ ld l,a
+ bcall(_SetXXXXOP2) ;   and put that into... OP2? Thanks, TI!
+ bcall(_OP2ToOP1)   ; Put that data back where it belongs!
  ld hl,response+1   ; go to the next byte, to see if we got data
  ld a,(hl)          ;   and load the returned command ID
  cp $5A             ; check if that command ID is ERR
